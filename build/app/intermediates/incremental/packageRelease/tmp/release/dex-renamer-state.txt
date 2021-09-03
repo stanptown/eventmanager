@@ -1,0 +1,4 @@
+#Fri Sep 03 01:45:42 IST 2021
+base.0=/Users/satviktiwari/Desktop/Events_Manager_App-main/build/app/intermediates/dex/release/minifyReleaseWithR8/classes.dex
+renamed.0=classes.dex
+path.0=classes.dex

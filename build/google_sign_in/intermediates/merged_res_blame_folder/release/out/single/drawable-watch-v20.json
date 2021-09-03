@@ -1,0 +1,14 @@
+[
+    {
+        "merged": "/Users/satviktiwari/Desktop/Events_Manager_App-main/build/google_sign_in/intermediates/res/merged/release/drawable-watch-v20/common_google_signin_btn_text_dark_normal.xml",
+        "source": "/Users/satviktiwari/.gradle/caches/transforms-2/files-2.1/53f0913c601adf618f4fa66062b94cf3/jetified-play-services-auth-16.0.1/res/drawable-watch-v20/common_google_signin_btn_text_dark_normal.xml"
+    },
+    {
+        "merged": "/Users/satviktiwari/Desktop/Events_Manager_App-main/build/google_sign_in/intermediates/res/merged/release/drawable-watch-v20/common_google_signin_btn_text_light_normal.xml",
+        "source": "/Users/satviktiwari/.gradle/caches/transforms-2/files-2.1/53f0913c601adf618f4fa66062b94cf3/jetified-play-services-auth-16.0.1/res/drawable-watch-v20/common_google_signin_btn_text_light_normal.xml"
+    },
+    {
+        "merged": "/Users/satviktiwari/Desktop/Events_Manager_App-main/build/google_sign_in/intermediates/res/merged/release/drawable-watch-v20/common_google_signin_btn_text_disabled.xml",
+        "source": "/Users/satviktiwari/.gradle/caches/transforms-2/files-2.1/53f0913c601adf618f4fa66062b94cf3/jetified-play-services-auth-16.0.1/res/drawable-watch-v20/common_google_signin_btn_text_disabled.xml"
+    }
+]

@@ -1,0 +1,47 @@
+{
+  "project_info": {
+    "project_number": "369674227961",
+    "project_id": "eventmanagerapp-51547",
+    "storage_bucket": "eventmanagerapp-51547.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:369674227961:android:2a6419198834be57529228",
+        "android_client_info": {
+          "package_name": "com.example.eventmanagerapp"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "369674227961-sltn3p9vgjhk62ajq4hv3gv8bk4lmivs.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.eventmanagerapp",
+            "certificate_hash": "a280cd2838c2a0acea9f8f5456227284dcaa12ed"
+          }
+        },
+        {
+          "client_id": "369674227961-vto14hrsdmq13vq13l1o07175sdi1292.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDqyTlM3GscKqYWPejYdfbuag_QzUR4_ZA"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "369674227961-vto14hrsdmq13vq13l1o07175sdi1292.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

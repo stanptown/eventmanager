@@ -1,0 +1,6 @@
+io/flutter/plugins/GeneratedPluginRegistrant.java
+ io.flutter.plugins.GeneratedPluginRegistrant
+com/example/events_manager_app/BuildConfig.java
+ com.example.events_manager_app.BuildConfig
+com/example/events_manager_app/MainActivity.java
+ com.example.events_manager_app.MainActivity
