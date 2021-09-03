@@ -1,17 +1,17 @@
 import 'dart:io';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:events_manager_app/screens/add_event_screen.dart';
-import 'package:events_manager_app/screens/edit_profile_screen.dart';
-import 'package:events_manager_app/screens/loading_screen.dart';
-import 'package:events_manager_app/screens/todo_screen.dart';
-import 'package:events_manager_app/screens/add_event_screen.dart';
-import 'package:events_manager_app/screens/edit_event_screen.dart';
+import 'package:events_manager_app/screens/addevent.dart';
+import 'package:events_manager_app/screens/editprofile.dart';
+import 'package:events_manager_app/screens/load.dart';
+import 'package:events_manager_app/screens/todo.dart';
+import 'package:events_manager_app/screens/addevent.dart';
+import 'package:events_manager_app/screens/editevent.dart';
 import 'package:events_manager_app/utils/alert.dart';
 import 'package:events_manager_app/utils/events.dart';
 import 'package:events_manager_app/utils/todo.dart';
 import 'package:events_manager_app/main.dart';
-import 'package:events_manager_app/screens/welcome_screen.dart';
+import 'package:events_manager_app/screens/welcome.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -20,23 +20,19 @@ import 'package:path_provider/path_provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:table_calendar/table_calendar.dart';
 
-class HomeScreen extends StatefulWidget {
-  static const String id = '/home';
+class AdminHomeScreen extends StatefulWidget {
+  static const String id = '/admin';
 
   @override
-  _HomeScreenState createState() => _HomeScreenState();
+  _AdminHomeScreenState createState() => _AdminHomeScreenState();
 }
 
-String userName = '';
+String userName2 = '';
 
-class _HomeScreenState extends State<HomeScreen> {
-
+class _AdminHomeScreenState extends State<AdminHomeScreen> {
 
   FirebaseAuth auth = FirebaseAuth.instance;
   int currIndex = 0;
-
-
-
 
   late final ValueNotifier<List<Event>> _selectedEvents;
   CalendarFormat _calendarFormat = CalendarFormat.month;
@@ -49,7 +45,6 @@ class _HomeScreenState extends State<HomeScreen> {
   Map<String, Color> colorCodes = {
     '---' : Color(Colors.black.value),
   };
-
 
   @override
   void initState() {
@@ -69,8 +64,6 @@ class _HomeScreenState extends State<HomeScreen> {
 
   List<Event> _getEventsForDay(DateTime day) {
     print('Called');
-    // print(kEvents[day]);
-    // Implementation example
     return kEvents[day] ?? [];
   }
 
@@ -122,41 +115,33 @@ class _HomeScreenState extends State<HomeScreen> {
     List<Widget> tabs = [
       Column(
         children: [
-          TableCalendar<Event>(
-            firstDay: kFirstDay,
-            lastDay: kLastDay,
-            focusedDay: _focusedDay,
-            selectedDayPredicate: (day) => isSameDay(_selectedDay, day),
-            rangeStartDay: _rangeStart,
-            rangeEndDay: _rangeEnd,
-            calendarFormat: _calendarFormat,
-            rangeSelectionMode: _rangeSelectionMode,
-            eventLoader: _getEventsForDay,
-            startingDayOfWeek: StartingDayOfWeek.monday,
-            onDaySelected: _onDaySelected,
-            onRangeSelected: _onRangeSelected,
-            onFormatChanged: (format) {
-              if (_calendarFormat != format) {
-                setState(() {
-                  _calendarFormat = format;
-                });
-              }
-            },
-            onPageChanged: (focusedDay) {
-              _focusedDay = focusedDay;
-            },
-            calendarBuilders: CalendarBuilders(
-              singleMarkerBuilder: (context, date, event){
-                Color? cor = colorCodes[event.board];
-                return Container(
-                  decoration: BoxDecoration(shape: BoxShape.circle, color: cor),
-                  width: 7.0,
-                  height: 7.0,
-                  margin: const EdgeInsets.symmetric(horizontal: 1.5),
-                );
-              }
+
+            // color: isDark ? Colors.red.shade300 : Colors.grey.shade200,
+            TableCalendar<Event>(
+              firstDay: kFirstDay,
+              lastDay: kLastDay,
+              focusedDay: _focusedDay,
+              selectedDayPredicate: (day) => isSameDay(_selectedDay, day),
+              rangeStartDay: _rangeStart,
+              rangeEndDay: _rangeEnd,
+              calendarFormat: _calendarFormat,
+              rangeSelectionMode: _rangeSelectionMode,
+              eventLoader: _getEventsForDay,
+              startingDayOfWeek: StartingDayOfWeek.monday,
+              onDaySelected: _onDaySelected,
+              onRangeSelected: _onRangeSelected,
+              onFormatChanged: (format) {
+                if (_calendarFormat != format) {
+                  setState(() {
+                    _calendarFormat = format;
+                  });
+                }
+              },
+              onPageChanged: (focusedDay) {
+                _focusedDay = focusedDay;
+              },
             ),
-          ),
+
           const SizedBox(height: 8.0),
           Expanded(
             child: ValueListenableBuilder<List<Event>>(
@@ -175,13 +160,24 @@ class _HomeScreenState extends State<HomeScreen> {
                         borderRadius: BorderRadius.circular(12.0),
                       ),
                       child: ListTile(
-
                         onTap: () => print('${value[index].title}'),
                         title: Text('${value[index].title}'),
                         // subtitle: Text('${value[index].board}'),
+                        leading: IconButton(
+                          icon: Icon(
+                            Icons.edit_road,
+                          ),
+                          onPressed: (){
+                            editEventTitle = value[index].title;
+                            editEventUid = value[index].uid;
+                            // editEventBoard = value[index].board;
+                            editEventDate = _focusedDay;
+                            Navigator.pushNamed(context, EditEventScreen.id);
+                          },
+                        ),
                         trailing: IconButton(
                           icon: Icon(
-                              Icons.playlist_add
+                              Icons.playlist_add_sharp
                           ),
                           onPressed: (){
                             if(!myToDo.contains(value[index].uid)){
@@ -214,43 +210,36 @@ class _HomeScreenState extends State<HomeScreen> {
         padding: const EdgeInsets.all(15.0),
         child: SizedBox.expand(
           child: Column(
-
+            crossAxisAlignment: CrossAxisAlignment.center,
             children: [
               Text(
                 'My Profile',
                 style: TextStyle(
-                  fontWeight: FontWeight.bold,
-                  fontSize: 30.0,
-                  fontStyle: FontStyle.italic,
-                  decoration: TextDecoration.underline,
 
+                  fontWeight: FontWeight.bold,
+                  fontSize: 40.0,
+                    fontStyle: FontStyle.italic,
+                  decoration: TextDecoration.underline,
                 ),
-                textAlign: TextAlign.center,
               ),
               SizedBox(height: 20,),
               Text(
-                'Name: ' + userName,
+                'Name: ' + userName2,
                 style: TextStyle(
                   // fontWeight: FontWeight.bold,
-                  fontSize: 25.0,
-
+                  fontSize: 30.0,
                 ),
-                textAlign: TextAlign.left,
-
               ),
               SizedBox(height: 20,),
               Text(
-                "You are not an ADMIN",
+                "You are an ADMIN",
                 style: TextStyle(
                   fontWeight: FontWeight.bold,
                   fontSize: 15.0,
                 ),
               ),
               SizedBox(height: 20,),
-
-              // SizedBox(height: 335,),
               ElevatedButton(
-
                 onPressed: (){
                   Navigator.pushNamed(context, EditProfileScreen.id);
                 },
@@ -260,9 +249,7 @@ class _HomeScreenState extends State<HomeScreen> {
                 child: Text(
                     'Edit Profile'
                 ),
-
               ),
-
             ],
           ),
         ),
@@ -272,12 +259,18 @@ class _HomeScreenState extends State<HomeScreen> {
     return Scaffold(
       appBar: AppBar(
         backgroundColor: Colors.green,
-
         title: Text(
           'Home',
         ),
         actions: [
-
+          IconButton(
+            onPressed: (){
+              Navigator.pushNamed(context, AddEventScreen.id);
+            },
+            icon: Icon(
+              Icons.add_box,
+            ),
+          ),
           IconButton(
             onPressed: (){
               Navigator.pushNamed(context, ToDoScreen.id);
@@ -287,39 +280,28 @@ class _HomeScreenState extends State<HomeScreen> {
             ),
           ),
         ],
-
-
-        leading:IconButton(
-        icon: Icon(
-        Icons.logout,
-      ),
-      onPressed: () async{
-        auth.signOut();
-        SharedPreferences prefs = await SharedPreferences.getInstance();
-        prefs.clear();
-        email = null;
-        isAdmin = false;
-        try{
-          await FirebaseStorage.instance
-              .ref('profile.png')
-              .writeToFile(File(profileImagePath));
-        } on FirebaseException catch (err){
-          showAlert(context, err.toString());
-        }
-        Navigator.popAndPushNamed(context, WelcomeScreen.id);
-      },
-    ),
-
-
-
-
-
+        leading: IconButton(
+          icon: Icon(
+            Icons.logout,
+          ),
+          onPressed: () async{
+            auth.signOut();
+            SharedPreferences prefs = await SharedPreferences.getInstance();
+            prefs.clear();
+            email = null;
+            isAdmin = false;
+            try{
+              await FirebaseStorage.instance
+                  .ref('profile.png')
+                  .writeToFile(File(profileImagePath));
+            } on FirebaseException catch (err){
+              showAlert(context, err.toString());
+            }
+            Navigator.popAndPushNamed(context, WelcomeScreen.id);
+          },
+        ),
       ),
       body: tabs[currIndex],
-
-
-
-
 
       bottomNavigationBar: BottomNavigationBar(
         backgroundColor: Colors.green,
@@ -327,25 +309,19 @@ class _HomeScreenState extends State<HomeScreen> {
         unselectedItemColor: Colors.white,
         items: [
           BottomNavigationBarItem(
-              label: 'Calendar',
-              icon: Icon(
-                Icons.calendar_today,
-              )
+            label: 'Calendar',
+            icon: Icon(
+              Icons.calendar_today,
+            )
           ),
           BottomNavigationBarItem(
-              label: 'Profile',
-              icon: Icon(
-                Icons.person_pin_rounded,
-              )
+            label: 'Profile',
+            icon: Icon(
+              Icons.person_pin_rounded,
+            )
           ),
-
-
-
-
-
         ],
         currentIndex: currIndex,
-
         onTap: (val){
           setState(() {
             currIndex = val;

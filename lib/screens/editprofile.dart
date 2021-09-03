@@ -1,15 +1,15 @@
 import 'dart:io';
-import 'package:events_manager_app/screens/admin_home_screen.dart';
+import 'package:events_manager_app/screens/adminhome.dart';
 
-import 'home_screen.dart';
+import 'home.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:events_manager_app/main.dart';
-import 'package:events_manager_app/screens/loading_screen.dart';
+import 'package:events_manager_app/screens/load.dart';
 import 'package:events_manager_app/utils/alert.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
-import 'admin_home_screen.dart';
+import 'adminhome.dart';
 
 class EditProfileScreen extends StatefulWidget {
   static const String id = '/profile';

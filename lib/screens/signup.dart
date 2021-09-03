@@ -2,27 +2,26 @@ import 'dart:io';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:events_manager_app/main.dart';
-import 'package:events_manager_app/screens/loading_screen.dart';
+import 'package:events_manager_app/screens/home.dart';
+import 'package:events_manager_app/screens/load.dart';
 import 'package:events_manager_app/utils/alert.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:flutter_signin_button/flutter_signin_button.dart';
-import 'package:google_sign_in/google_sign_in.dart';
-import 'package:path_provider/path_provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-import 'home_screen.dart';
+import 'package:path_provider/path_provider.dart';
 
-class LoginPage extends StatefulWidget {
-  static const String id = '/login';
+class SignUpPage extends StatefulWidget {
+  static const String id = '/signup';
 
   @override
-  _LoginPageState createState() => _LoginPageState();
+  _SignUpPageState createState() => _SignUpPageState();
 }
 
-class _LoginPageState extends State<LoginPage> {
-  String loginEmail = '';
-  String loginPassword = '';
+class _SignUpPageState extends State<SignUpPage> {
+  String signUpName = '';
+  String signUpEmail = '';
+  String signUpPassword = '';
 
   FirebaseAuth auth = FirebaseAuth.instance;
 
@@ -34,24 +33,20 @@ class _LoginPageState extends State<LoginPage> {
         child: SizedBox.expand(
           child: Padding(
             padding: const EdgeInsets.all(15.0),
-
-
             child: Column(
               children: [
-
-              Container(
-              height: 300,
-              child: Image(image: AssetImage("images/main2.jpeg"),
-                fit: BoxFit.contain
-                ,
-              ),),
-
+                Container(
+                  height: 300,
+                  child: Image(
+                    image: AssetImage("images/main3.jpeg"),
+                    fit: BoxFit.contain,
+                  ),
+                ),
                 Row(
                   mainAxisAlignment: MainAxisAlignment.start,
                   children: [
-                    SizedBox(height: 10,),
                     Text(
-                      'Login',
+                      'Sign Up',
                       style: TextStyle(
                         fontSize: 40.0,
                         fontWeight: FontWeight.bold,
@@ -59,10 +54,40 @@ class _LoginPageState extends State<LoginPage> {
                     ),
                   ],
                 ),
+                SizedBox(height: 10,),
                 TextField(
                   keyboardType: TextInputType.emailAddress,
                   onChanged: (val){
-                    loginEmail=val;
+                    signUpName=val;
+                  },
+                  decoration: InputDecoration(
+                    hintText: 'Enter your name: ',
+                    contentPadding:
+                    EdgeInsets.symmetric(vertical: 10.0, horizontal: 20.0),
+                    border: OutlineInputBorder(
+                      borderRadius: BorderRadius.all(Radius.circular(32.0)),
+                    ),
+                    enabledBorder: OutlineInputBorder(
+                      borderSide:
+                      BorderSide(
+                          // color: Colors.redAccent,
+                          width: 1.0),
+                      borderRadius: BorderRadius.all(Radius.circular(32.0)),
+                    ),
+                    focusedBorder: OutlineInputBorder(
+                      borderSide:
+                      BorderSide(
+                          // color: Colors.redAccent,
+                          width: 2.0),
+                      borderRadius: BorderRadius.all(Radius.circular(32.0)),
+                    ),
+                  ),
+                ),
+                SizedBox(height: 10,),
+                TextField(
+                  keyboardType: TextInputType.emailAddress,
+                  onChanged: (val){
+                    signUpEmail=val;
                   },
                   decoration: InputDecoration(
                     hintText: 'Enter your email id: ',
@@ -91,7 +116,7 @@ class _LoginPageState extends State<LoginPage> {
                 TextField(
                   obscureText: true,
                   onChanged: (val){
-                    loginPassword=val;
+                    signUpPassword=val;
                   },
                   decoration: InputDecoration(
                     hintText: 'Enter your password: ',
@@ -117,30 +142,55 @@ class _LoginPageState extends State<LoginPage> {
                   ),
                 ),
                 ElevatedButton(
-                  style: ElevatedButton.styleFrom(primary: Colors.orange),
                   onPressed: () async{
                     try {
-                      UserCredential userCredential = await auth.signInWithEmailAndPassword(
-                          email: loginEmail,
-                          password: loginPassword,
+                      UserCredential userCredential = await auth.createUserWithEmailAndPassword(
+                          email: signUpEmail,
+                          password: signUpPassword,
                       );
                       SharedPreferences prefs = await SharedPreferences.getInstance();
-                      prefs.setString('email', loginEmail);
-                      email = loginEmail;
+                      prefs.setString('email', signUpEmail);
+                      email = signUpEmail;
                       validateAdmin(email);
-                      Navigator.pushNamed(context, LoadingScreen.id);
+                      FirebaseFirestore.instance.collection('users')
+                        .doc(email)
+                        .set({
+                          'todo' : [],
+                          'email' : email,
+                          'name' : signUpName,
+                        })
+                        .then((value) async {
+                          File file = File(profileImagePath);
+                          try{
+                            await FirebaseStorage.instance
+                                .ref('$email/profile.png')
+                                .putFile(file);
+                          } on FirebaseException catch (err){
+                            print(err);
+                          }
+                          Navigator.pushNamed(context, LoadingScreen.id);
+                        })
+                        .catchError((err) {
+                          showAlert(context, err);
+                        });
+
                     } on FirebaseAuthException catch (e) {
-                      if (e.code == 'user-not-found') {
-                        showAlert(context, 'No such user found');
-                      } else if (e.code == 'wrong-password') {
-                        showAlert(context, 'Invalid Password');
+                      if (e.code == 'weak-password') {
+                        showAlert(context, 'Password is too weak');
+                      } else if (e.code == 'email-already-in-use') {
+                        showAlert(context, 'Account already exists');
                       }
+                    } catch (e) {
+                      showAlert(context, e.toString());
                     }
                   },
-                  child: Text(
-                      'Login'
+                  style: ButtonStyle(
+                    // backgroundColor: MaterialStateProperty.all(Colors.red),
                   ),
-                ),
+                  child: Text(
+                    'Sign Up'
+                  ),
+                )
               ],
             ),
           ),

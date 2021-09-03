@@ -1,8 +1,8 @@
 import 'package:events_manager_app/main.dart';
-import 'package:events_manager_app/screens/login_page.dart';
+import 'package:events_manager_app/screens/login.dart';
 import 'package:flutter/material.dart';
 import 'package:animated_text_kit/animated_text_kit.dart';
-import 'package:events_manager_app/screens/signup_page.dart';
+import 'package:events_manager_app/screens/signup.dart';
 
 class WelcomeScreen extends StatefulWidget {
   static const String id = '/welcome';

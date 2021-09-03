@@ -1,6 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:events_manager_app/main.dart';
-import 'package:events_manager_app/screens/loading_screen.dart';
+import 'package:events_manager_app/screens/load.dart';
 import 'package:events_manager_app/utils/alert.dart';
 import 'package:events_manager_app/utils/todo.dart';
 import 'package:flutter/material.dart';

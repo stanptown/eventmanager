@@ -1,9 +1,9 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:events_manager_app/main.dart';
-import 'package:events_manager_app/screens/admin_home_screen.dart';
+import 'package:events_manager_app/screens/adminhome.dart';
 import 'package:events_manager_app/utils/events.dart';
 import 'package:flutter/material.dart';
-import 'package:events_manager_app/screens/home_screen.dart';
+import 'package:events_manager_app/screens/home.dart';
 
 var allToDo;
 List<dynamic> myToDo = [];

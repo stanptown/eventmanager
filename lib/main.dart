@@ -1,9 +1,9 @@
 import 'dart:io';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:events_manager_app/screens/add_event_screen.dart';
-import 'package:events_manager_app/screens/admin_home_screen.dart';
-import 'package:events_manager_app/screens/edit_profile_screen.dart';
+import 'package:events_manager_app/screens/addevent.dart';
+import 'package:events_manager_app/screens/adminhome.dart';
+import 'package:events_manager_app/screens/editprofile.dart';
 import 'package:events_manager_app/utils/events.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase_core/firebase_core.dart';
@@ -11,13 +11,13 @@ import 'package:firebase_storage/firebase_storage.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:flutter_phoenix/flutter_phoenix.dart';
 import 'package:path_provider/path_provider.dart';
-import 'screens/welcome_screen.dart';
-import 'screens/signup_page.dart';
-import 'screens/home_screen.dart';
-import 'screens/login_page.dart';
-import 'screens/todo_screen.dart';
-import 'screens/edit_event_screen.dart';
-import 'screens/loading_screen.dart';
+import 'screens/welcome.dart';
+import 'screens/signup.dart';
+import 'screens/home.dart';
+import 'screens/login.dart';
+import 'screens/todo.dart';
+import 'screens/editevent.dart';
+import 'screens/load.dart';
 
 Future<void> main() async{
   WidgetsFlutterBinding.ensureInitialized();

@@ -2,8 +2,8 @@ import 'dart:io';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:events_manager_app/main.dart';
-import 'package:events_manager_app/screens/admin_home_screen.dart';
-import 'package:events_manager_app/screens/home_screen.dart';
+import 'package:events_manager_app/screens/adminhome.dart';
+import 'package:events_manager_app/screens/home.dart';
 import 'package:events_manager_app/utils/events.dart';
 import 'package:events_manager_app/utils/todo.dart';
 import 'package:flutter/material.dart';
@@ -39,8 +39,10 @@ class _LoadingScreenState extends State<LoadingScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: SpinKitDoubleBounce(
-        color: Colors.lightBlue,
+      backgroundColor: Colors.green,
+      body: SpinKitFoldingCube(
+        color: Colors.white,
+
       ),
     );
   }

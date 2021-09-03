@@ -4,7 +4,7 @@ import 'package:events_manager_app/utils/todo.dart';
 import 'package:flutter/material.dart';
 import 'package:table_calendar/table_calendar.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:events_manager_app/screens/loading_screen.dart';
+import 'package:events_manager_app/screens/load.dart';
 
 /// Example event class.
 class Event {

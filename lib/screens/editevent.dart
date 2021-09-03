@@ -1,6 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:date_time_picker/date_time_picker.dart';
-import 'package:events_manager_app/screens/loading_screen.dart';
+import 'package:events_manager_app/screens/load.dart';
 import 'package:events_manager_app/utils/alert.dart';
 import 'package:events_manager_app/utils/events.dart';
 import 'package:flutter/material.dart';
@@ -118,7 +118,7 @@ class _EditEventScreenState extends State<EditEventScreen> {
                               'board' : '---',
                           })
                           .then((value) {
-                            ScaffoldMessenger.of(context).showSnackBar(mySnackBar(context, 'Edit successful. Restart app to see changes or Relogin.'));
+                            ScaffoldMessenger.of(context).showSnackBar(mySnackBar(context, 'Edit successful. Restart app to see changes.'));
                             Navigator.pushNamed(context, LoadingScreen.id);
                           })
                           .catchError((err) {
